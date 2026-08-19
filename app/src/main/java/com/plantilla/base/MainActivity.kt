@@ -43,7 +43,7 @@ class MainActivity : Activity(), SensorEventListener {
         }
 
         val titulo = TextView(this).apply {
-            text = "📱 Félix Hardware Monitor v2.1"
+            text = "📱 Félix Hardware Monitor v3.0"
             textSize = 24f
             gravity = Gravity.CENTER
             setPadding(0, 0, 0, 10)
@@ -72,9 +72,11 @@ class MainActivity : Activity(), SensorEventListener {
         }
 
         val btnCamaraDual = Button(this).apply {
-            text = "🎥 Cámara Dual (Próximamente)"
+            text = "🎥 Cámara Dual"
             setOnClickListener { 
-                Toast.makeText(this@MainActivity, "Módulo de cámara dual en desarrollo...", Toast.LENGTH_SHORT).show() 
+                val cameraManager = CameraManager(this@MainActivity)
+                cameraManager.iniciarCamaras()
+                Toast.makeText(this@MainActivity, "Abriendo motor de cámara dual...", Toast.LENGTH_SHORT).show() 
             }
         }
 
@@ -103,7 +105,7 @@ class MainActivity : Activity(), SensorEventListener {
         val intentBateria = registerReceiver(null, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
         val nivel = intentBateria?.getIntExtra(BatteryManager.EXTRA_LEVEL, -1) ?: -1
         val escala = intentBateria?.getIntExtra(BatteryManager.EXTRA_SCALE, -1) ?: -1
-        val pctBateria = (nivel / escala.toFloat() * 100).toInt()
+        val pctBateria = if (escala > 0) (nivel / escala.toFloat() * 100).toInt() else 0
         
         val tempRaw = intentBateria?.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, 0) ?: 0
         val tempCelsius = tempRaw / 10.0
@@ -155,7 +157,7 @@ class MainActivity : Activity(), SensorEventListener {
         desregistrarSensores()
         val layout = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL; setPadding(50, 50, 50, 50) }
         val info = TextView(this).apply {
-            text = "Modelo: ${Build.MODEL}\nMarca: ${Build.MANUFACTURER}\nAndroid: ${Build.VERSION.RELEASE}\nApp: v2.1"
+            text = "Modelo: ${Build.MODEL}\nMarca: ${Build.MANUFACTURER}\nAndroid: ${Build.VERSION.RELEASE}\nApp: v3.0"
             textSize = 16f
         }
         val btnVolver = Button(this).apply { text = "⬅️ Volver"; setOnClickListener { mostrarMenuPrincipal() } }
