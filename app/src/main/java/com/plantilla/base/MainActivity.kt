@@ -1,4 +1,4 @@
-package com.plantilla.base
+package com.felix.hardwaremonitor
 
 import android.app.Activity
 import android.content.Context
@@ -167,3 +167,4 @@ class MainActivity : Activity(), SensorEventListener {
 
     override fun onPause() { super.onPause(); desregistrarSensores() }
 }
+
