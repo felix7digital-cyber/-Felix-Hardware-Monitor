@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace 'com.felix.hardwaremonitor'
+    namespace 'com.plantilla.base'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.felix.hardwaremonitor"
+        applicationId "com.plantilla.base"
         minSdk 21
         targetSdk 34
         versionCode 2
